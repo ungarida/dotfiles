@@ -1,0 +1,37 @@
+---
+# file: roles/zsh/tasks/main.yml
+
+# This is meant to run on Manjaro Openbox https://manjaro-community.osdn.io/openbox/
+
+- name: Checks for curl installation | stat
+  become: yes
+  become_user: root
+  become_method: sudo
+  stat:
+    path: "/usr/bin/curl"
+  register: curl_stat
+
+- name: Checks for zimfw installation | stat
+  become: yes
+  become_user: davide
+  become_method: sudo
+  stat:
+    path: "{{ lookup('env', 'HOME') }}/.zim"
+  register: zimfw_stat
+
+- name: Installs zimfw | raw
+  become: yes
+  become_user: davide
+  become_method: sudo
+  raw: 'curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh'
+  when: not zimfw_stat.stat.exists
+
+- name: Links .zshrc file | file
+  become: yes
+  become_user: davide
+  become_method: sudo
+  file:
+    src: "{{ lookup('env', 'ROOTDIR') }}/roles/zsh/files/zshrc.link"
+    dest: "{{ lookup('env', 'HOME') }}/.zshrc"
+    state: link
+    force: yes
