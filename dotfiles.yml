@@ -2,6 +2,6 @@
 - name: Set up local workstation
   hosts: local
   roles:
-    - role: openbox
+    - role: configs
     - role: packages
     - role: zsh

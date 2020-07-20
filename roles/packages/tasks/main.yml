@@ -3,7 +3,7 @@
 
 # This is meant to run on Manjaro Openbox https://manjaro-community.osdn.io/openbox/
 
-- name: Installs packages | pacman
+- name: Installs web development applications and libraries | pacman
   become: yes
   become_user: root
   become_method: sudo
@@ -11,7 +11,6 @@
     name:
       - chromium
       - code
-      - gitahead
       - yarn
     state: present
     update_cache: yes

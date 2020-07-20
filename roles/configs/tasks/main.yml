@@ -1,0 +1,49 @@
+---
+# file: roles/configs/tasks/main.yml
+
+# This is meant to run on Manjaro Openbox https://manjaro-community.osdn.io/openbox/
+
+- name: Git user.name configuration | git_config
+  become: yes
+  become_user: davideu
+  become_method: sudo
+  git_config:
+    name: user.name
+    scope: global
+    value: Davide Ungari
+
+- name: Git user.email configuration | git_config
+  become: yes
+  become_user: davideu
+  become_method: sudo 
+  git_config:
+    name: user.email
+    scope: global
+    value: ungarida@gmail.com
+
+- name: Links autostart file | file
+  become: yes
+  become_user: davideu
+  become_method: sudo
+  file:
+    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/autostart.link"
+    dest: "{{ lookup('env', 'HOME') }}/.config/openbox/autostart"
+    state: link
+    force: yes
+
+- name: Links .xmodmap file | file
+  become: yes
+  become_user: davideu
+  become_method: sudo
+  file:
+    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/xmodmap.link"
+    dest: "{{ lookup('env', 'HOME') }}/.xmodmap"
+    state: link
+    force: yes
+
+- name: Loads .xmodmap file | shell
+  become: yes
+  become_user: davideu
+  become_method: sudo
+  shell:
+    cmd: xmodmap {{ lookup('env', 'HOME') }}/.xmodmap

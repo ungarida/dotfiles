@@ -13,7 +13,7 @@
 
 - name: Checks for zimfw installation | stat
   become: yes
-  become_user: davide
+  become_user: davideu
   become_method: sudo
   stat:
     path: "{{ lookup('env', 'HOME') }}/.zim"
@@ -21,14 +21,14 @@
 
 - name: Installs zimfw | raw
   become: yes
-  become_user: davide
+  become_user: davideu
   become_method: sudo
   raw: 'curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh'
   when: not zimfw_stat.stat.exists
 
 - name: Links .zshrc file | file
   become: yes
-  become_user: davide
+  become_user: davideu
   become_method: sudo
   file:
     src: "{{ lookup('env', 'ROOTDIR') }}/roles/zsh/files/zshrc.link"
