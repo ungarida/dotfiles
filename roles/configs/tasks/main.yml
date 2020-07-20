@@ -26,7 +26,7 @@
   become_user: davideu
   become_method: sudo
   file:
-    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/autostart.link"
+    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/openbox.autostart.link"
     dest: "{{ lookup('env', 'HOME') }}/.config/openbox/autostart"
     state: link
     force: yes
