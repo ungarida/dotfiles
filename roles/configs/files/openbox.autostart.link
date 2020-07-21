@@ -46,3 +46,6 @@ xdg-user-dirs-gtk-update &
 ### enable numlock
 ### uncomment next line
 #numlockx &
+
+### load custom xmodmap
+sleep 1; /usr/bin/xmodmap ~/.xmodmap
