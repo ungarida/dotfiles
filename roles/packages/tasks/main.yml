@@ -14,3 +14,47 @@
       - yarn
     state: present
     update_cache: yes
+
+- name: Checks for nodenv installation | stat
+  become: yes
+  become_user: davideu
+  become_method: sudo
+  stat:
+    path: "{{ lookup('env', 'HOME') }}/.nodenv"
+  register: nodenv_stat
+
+- name: Clone nodenv repository | git
+  become: yes
+  become_user: davideu
+  become_method: sudo
+  git:
+    repo: https://github.com/nodenv/nodenv.git
+    version: master
+    dest: "{{ lookup('env', 'HOME') }}/.nodenv"
+  when: not nodenv_stat.stat.exists
+
+- name: Configures nodenv | shell
+  become: yes
+  become_user: davideu
+  become_method: sudo
+  shell:
+    cmd: cd {{ lookup('env', 'HOME') }}/.nodenv && src/configure && make -C src
+  when: not nodenv_stat.stat.exists
+
+- name: Checks for node-build installation | stat
+  become: yes
+  become_user: davideu
+  become_method: sudo
+  stat:
+    path: "{{ lookup('env', 'HOME') }}/.nodenv/plugins/node-build"
+  register: nodebuild_stat
+
+- name: Clone node-build repository | git
+  become: yes
+  become_user: davideu
+  become_method: sudo
+  git:
+    repo: https://github.com/nodenv/node-build.git
+    version: master
+    dest: "{{ lookup('env', 'HOME') }}/.nodenv/plugins/node-build"
+  when: not nodebuild_stat.stat.exists
