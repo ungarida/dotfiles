@@ -31,6 +31,16 @@
     state: link
     force: yes
 
+- name: Links lxdm.conf | file
+  become: yes
+  become_user: root
+  become_method: sudo
+  file:
+    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/lxdm.conf.link"
+    dest: "/etc/lxdm/lxdm.conf"
+    state: link
+    force: yes
+
 - name: Links nitrogen.cfg | file
   become: yes
   become_user: davideu
