@@ -17,3 +17,10 @@ It installs only open source software, I need some basic web development applica
 
 And `zsh` configuration framework:
 * [Zim](https://github.com/zimfw/zimfw)
+
+## Run
+To run this ansible playbook use the `boostrap` script:
+
+```
+➜ ./bootstrap.sh
+```
