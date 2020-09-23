@@ -31,7 +31,18 @@
     state: link
     force: yes
 
-- name: Links lxdm.conf | copy
+- name: Move lxdm theme | copy
+  become: yes
+  become_user: root
+  become_method: sudo
+  copy:
+    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/lxdm-theme-dark"
+    dest: "/usr/share/lxdm/themes/"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: Move lxdm.conf | copy
   become: yes
   become_user: root
   become_method: sudo
@@ -41,16 +52,6 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
-  
-- name: Links nitrogen.cfg | file
-  become: yes
-  become_user: davideu
-  become_method: sudo
-  file:
-    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/nitrogen.cfg.link"
-    dest: "{{ lookup('env', 'HOME') }}/.config/nitrogen/nitrogen.cfg"
-    state: link
-    force: yes
 
 - name: Links wallpaper | file
   become: yes
@@ -59,16 +60,6 @@
   file:
     src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/daft_punk.wallpaper.2932x2932.jpg"
     dest: "{{ lookup('env', 'HOME') }}/Pictures/wallpaper"
-    state: link
-    force: yes
-
-- name: Links nitrogen bg-saved.cfg | file
-  become: yes
-  become_user: davideu
-  become_method: sudo
-  file:
-    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/nitrogen.bg-saved.cfg.link"
-    dest: "{{ lookup('env', 'HOME') }}/.config/nitrogen/bg-saved.cfg"
     state: link
     force: yes
 

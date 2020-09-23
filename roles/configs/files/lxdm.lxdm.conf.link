@@ -31,13 +31,9 @@ arg=/usr/bin/X -background vt7
 
 [display]
 ## the theme of greeter
-theme=Industrial
-
-## gtk theme used by greeter
-#gtk_theme=PacBang
+theme=lxdm-theme-dark
 
 ## background of the greeter
-#bg=/usr/share/backgrounds/PacBang/lunix/PacBang_3840x2160(by_Lunix).png
 bg=#050424
 
 ## if hide time

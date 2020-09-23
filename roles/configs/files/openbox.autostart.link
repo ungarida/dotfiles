@@ -20,6 +20,17 @@ sleep 1; manjaro-compositor --start &
 # pcmanfm --desktop &
 
 ### no desktop icons use nitrogen as wallpaper manager
+# Set a background color
+BG=""
+if which hsetroot >/dev/null 2>/dev/null; then
+  BG=hsetroot
+elif which esetroot >/dev/null 2>/dev/null; then
+  BG=esetroot
+elif which xsetroot >/dev/null 2>/dev/null; then
+  BG=xsetroot
+fi
+test -z $BG || $BG -solid "#050526"
+
 ### uncomment next line and comment pcmanfm above
 sleep 1; nitrogen --restore &
 # sleep 1; polybar -c ~/.config/polybar/config openbox-bar &
