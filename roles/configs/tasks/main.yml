@@ -31,16 +31,17 @@
     state: link
     force: yes
 
-- name: Links lxdm.conf | file
+- name: Links lxdm.conf | copy
   become: yes
   become_user: root
   become_method: sudo
-  file:
-    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/lxdm.conf.link"
+  copy:
+    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/lxdm.lxdm.conf.link"
     dest: "/etc/lxdm/lxdm.conf"
-    state: link
-    force: yes
-
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  
 - name: Links nitrogen.cfg | file
   become: yes
   become_user: davideu
@@ -77,6 +78,16 @@
   become_method: sudo
   shell:
     cmd: nitrogen --set-color="#050424" --set-zoom ~/Pictures/wallpaper --save
+
+- name: Links Rofi config.rasi | file
+  become: yes
+  become_user: davideu
+  become_method: sudo
+  file:
+    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/rofi.config.rasi.link"
+    dest: "{{ lookup('env', 'HOME') }}/.config/rofi/config.rasi"
+    state: link
+    force: yes
 
 - name: Links .xmodmap file | file
   become: yes
