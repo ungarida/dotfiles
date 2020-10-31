@@ -80,6 +80,16 @@
     state: link
     force: yes
 
+- name: Links Termite config | file
+  become: yes
+  become_user: davideu
+  become_method: sudo
+  file:
+    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/termite.config.link"
+    dest: "{{ lookup('env', 'HOME') }}/.config/termite/config"
+    state: link
+    force: yes
+
 - name: Links .xmodmap file | file
   become: yes
   become_user: davideu
