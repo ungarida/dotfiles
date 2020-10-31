@@ -15,7 +15,15 @@ It installs only open source software, I need some basic web development applica
 * [Chromium](https://github.com/chromium/chromium)
 * [Visual Studio Code - Open Source ("Code - OSS")](https://github.com/microsoft/vscode)
 
+### Fonts
+Several fonts:
+
+* [Fira](https://github.com/mozilla/Fira)
+* [Hermit](https://github.com/pcaro90/hermit)
+
+### Terminal
 And `zsh` configuration framework:
+
 * [Zim](https://github.com/zimfw/zimfw)
 
 ## Run
