@@ -11,6 +11,9 @@
     name:
       - chromium
       - code
+      - otf-fira-mono
+      - otf-fira-sans
+      - otf-hermit
       - yarn
     state: present
     update_cache: yes
