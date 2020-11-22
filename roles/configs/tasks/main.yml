@@ -21,16 +21,6 @@
     scope: global
     value: ungarida@gmail.com
 
-- name: Links autostart file | file
-  become: yes
-  become_user: davideu
-  become_method: sudo
-  file:
-    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/openbox.autostart.link"
-    dest: "{{ lookup('env', 'HOME') }}/.config/openbox/autostart"
-    state: link
-    force: yes
-
 - name: Move lxdm theme | copy
   become: yes
   become_user: root
@@ -52,6 +42,17 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
+
+- name: Links Openbox files | file
+  become: yes
+  become_user: davideu
+  become_method: sudo
+  file:
+    src: "{{item}}"
+    dest: "{{ lookup('env', 'HOME') }}/.config/openbox/{{ item | basename | regex_replace('^(.*)\\.link$', '\\1') }}"
+    state: link
+    force: yes
+  with_fileglob: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/openbox/*.link"
 
 - name: Links wallpaper | file
   become: yes

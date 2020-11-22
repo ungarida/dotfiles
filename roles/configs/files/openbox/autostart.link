@@ -1,0 +1,28 @@
+
+### compositor
+sleep 1; manjaro-compositor --start &
+
+### launch thunar in daemon mode for faster startup
+### comment if you would rather use pcmanfm
+thunar --daemon &
+
+sleep 1; nitrogen --restore &
+sleep 1; manjaro-tint2-session &
+
+### volumeicon
+sleep 1; volumeicon &
+
+## skippy windowswitcher
+skippy-xd --config ~/.config/skippy-xd/skippy-xd.rc --start-daemon &
+
+## super key for menu
+xcape -e 'Super_L=Alt_L|F1' &
+
+### PolicyKit authentication
+/usr/bin/lxpolkit &
+
+### Localize user system folders
+xdg-user-dirs-gtk-update &
+
+### load custom xmodmap
+## sleep 1; /usr/bin/xmodmap ~/.xmodmap
