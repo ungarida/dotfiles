@@ -504,7 +504,7 @@
     </keybind>
     <keybind key="C-Escape">
       <action name="Execute">
-        <command>lockscreen -- scrot</command>
+        <command>lockscreen -f "Hermit-Light" -d -p -t "Mallard is locked!" -- scrot</command>
       </action>
     </keybind>
     <keybind key="W-Escape">

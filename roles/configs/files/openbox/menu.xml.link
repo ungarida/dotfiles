@@ -184,7 +184,7 @@
 	<separator/>
 	<item label="Lock Screen">
 		<action name="Execute">
-			<command>lockscreen -- scrot</command>
+      <command>lockscreen -f "Hermit-Light" -d -p -t "Mallard is locked!" -- scrot</command>
 		</action>
 	</item>
 	<item label="Exit Openbox">
