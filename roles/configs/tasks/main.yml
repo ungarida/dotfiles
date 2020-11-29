@@ -76,8 +76,18 @@
   become_user: davideu
   become_method: sudo
   file:
-    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/rofi.config.rasi.link"
+    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/rofi/config.rasi.link"
     dest: "{{ lookup('env', 'HOME') }}/.config/rofi/config.rasi"
+    state: link
+    force: yes
+
+- name: Links Rofi rofr.sh | file
+  become: yes
+  become_user: root
+  become_method: sudo
+  file:
+    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/rofi/rofr.sh.link"
+    dest: "/usr/bin/rofr.sh"
     state: link
     force: yes
 

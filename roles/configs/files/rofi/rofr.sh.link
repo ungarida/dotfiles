@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+# snatched from an archlabs iso long time ago
+# rewritten by root.nix.dk
+#
+
+Name=$(basename "$0")
+Version="0.1"
+
+_usage() {
+    cat <<- EOF
+Usage:   $Name [options]
+
+Options:
+     -h      Show this message
+     -v      Show version
+     -w      Show window switcher
+     -m      Show root menu
+     -r      Launcher dialog
+     -l      Session choices
+
+EOF
+}
+
+#  Handle command line arguments
+while getopts ":hvwmrl" opt; do
+    case $opt in
+        h)
+            _usage
+            exit 0
+            ;;
+        v)
+            echo -e "$Name -- Version $Version"
+            exit 0
+            ;;
+        w)
+            rofi -modi window -show window -hide-scrollbar \
+                -eh 1 -padding 50 -line-padding 4
+            ;;
+        m)
+            rofi -location 1 -yoffset 40 -xoffset 10 \
+                -modi run,drun -show drun -line-padding 50 \
+                -columns 2 -padding 50 -hide-scrollbar
+            ;;
+        r)
+            rofi -modi run,drun -show drun -line-padding 50 \
+                -columns 2 -padding 50 -hide-scrollbar
+            ;;
+        l)
+            ANS=$(echo " Lock| Logout| Reboot| Shutdown" | \
+                rofi -sep "|" -dmenu -i -p 'System ' "" -width 20 \
+                -hide-scrollbar -eh 1 -line-padding 4 -padding 50 -lines 4)
+            case "$ANS" in
+                *Lock) lockscreen -f "Hermit-Light" -d -p -t "Mallard is locked!" -- scrot ;;
+                *Logout) loginctl terminate-session $(loginctl session-status | head -n 1 | awk '{print $1}') ;;
+                *Reboot) systemctl reboot ;;
+                *Shutdown) systemctl poweroff
+            esac
+            ;;
+        *)
+            echo -e "Invalid option: -$OPTARG"
+            _usage
+            exit 1
+    esac
+done
+shift $((OPTIND - 1))
+
+
+exit 0
