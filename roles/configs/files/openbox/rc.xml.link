@@ -502,7 +502,8 @@
         <command>termite -t "Termite"</command>
       </action>
     </keybind>
-    <keybind key="C-Escape">
+    <keybind key="C-Escape"> 
+		  <action name="ToggleShowDesktop"/>
       <action name="Execute">
         <command>lockscreen -f "Hermit-Light" -d -p -t "Mallard is locked!" -- scrot</command>
       </action>
