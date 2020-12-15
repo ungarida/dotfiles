@@ -3,6 +3,19 @@
 
 # This is meant to run on Manjaro Openbox https://manjaro-community.osdn.io/openbox/
 
+- name: Create directory if they don't exist
+  become: yes
+  become_user: davideu
+  become_method: sudo
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: davideu
+    group: davideu
+    mode: 0775
+  loop:
+    - "{{ lookup('env', 'HOME') }}/.config/redshift/"
+
 - name: Git user.name configuration | git_config
   become: yes
   become_user: davideu
@@ -70,6 +83,16 @@
   become_method: sudo
   shell:
     cmd: nitrogen --set-color="#050424" --set-zoom ~/Pictures/wallpaper --save
+
+- name: Links Redshift redshift.conf | file
+  become: yes
+  become_user: davideu
+  become_method: sudo
+  file:
+    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/redshift.conf.link"
+    dest: "{{ lookup('env', 'HOME') }}/.config/redshift/redshift.conf"
+    state: link
+    force: yes
 
 - name: Links Rofi config.rasi | file
   become: yes
