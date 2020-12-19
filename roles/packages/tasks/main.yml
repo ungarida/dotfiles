@@ -9,7 +9,6 @@
   become_method: sudo
   pacman:
     name:
-      - chromium
       - code
       - otf-fira-mono
       - otf-fira-sans
