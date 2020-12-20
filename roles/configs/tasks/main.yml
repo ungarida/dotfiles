@@ -34,6 +34,17 @@
     scope: global
     value: ungarida@gmail.com
 
+- name: GTK theme configuration | copy
+  become: yes
+  become_user: root
+  become_method: sudo
+  copy:
+    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/gtk-themes/Dracula"
+    dest: "/usr/share/themes/"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
 - name: Move lxdm theme | copy
   become: yes
   become_user: root
