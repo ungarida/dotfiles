@@ -4,17 +4,14 @@
 # This is meant to run on Manjaro Openbox https://manjaro-community.osdn.io/openbox/
 
 - name: Create directory if they don't exist
-  become: yes
-  become_user: davideu
-  become_method: sudo
   file:
     path: "{{ item }}"
     state: directory
     owner: davideu
     group: davideu
     mode: 0775
-  loop:
-    - "{{ lookup('env', 'HOME') }}/.config/redshift/"
+  with_items:
+  - "{{ HOME }}/.config/redshift/"
 
 - name: Git user.name configuration | git_config
   become: yes
@@ -34,23 +31,32 @@
     scope: global
     value: ungarida@gmail.com
 
+- name: Checks for GTK theme installation | stat
+  become: yes
+  become_user: root
+  become_method: sudo
+  stat:
+    path: "/usr/share/themes/Dracula"
+  register: gtk_dracula_theme
+
 - name: GTK theme configuration | copy
   become: yes
   become_user: root
   become_method: sudo
   copy:
-    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/gtk-themes/Dracula"
+    src: "{{ ROOTDIR }}/roles/configs/files/gtk-themes/Dracula"
     dest: "/usr/share/themes/"
     owner: root
     group: root
     mode: u=rw,g=r,o=r
+  when: not gtk_dracula_theme.stat.exists
 
 - name: Move lxdm theme | copy
   become: yes
   become_user: root
   become_method: sudo
   copy:
-    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/lxdm-theme-dark"
+    src: "{{ ROOTDIR }}/roles/configs/files/lxdm-theme-dark"
     dest: "/usr/share/lxdm/themes/"
     owner: root
     group: root
@@ -61,7 +67,7 @@
   become_user: root
   become_method: sudo
   copy:
-    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/lxdm.lxdm.conf.link"
+    src: "{{ ROOTDIR }}/roles/configs/files/lxdm.lxdm.conf.link"
     dest: "/etc/lxdm/lxdm.conf"
     owner: root
     group: root
@@ -73,18 +79,18 @@
   become_method: sudo
   file:
     src: "{{item}}"
-    dest: "{{ lookup('env', 'HOME') }}/.config/openbox/{{ item | basename | regex_replace('^(.*)\\.link$', '\\1') }}"
+    dest: "{{ HOME }}/.config/openbox/{{ item | basename | regex_replace('^(.*)\\.link$', '\\1') }}"
     state: link
     force: yes
-  with_fileglob: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/openbox/*.link"
+  with_fileglob: "{{ ROOTDIR }}/roles/configs/files/openbox/*.link"
 
 - name: Links wallpaper | file
   become: yes
   become_user: davideu
   become_method: sudo
   file:
-    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/daft_punk.wallpaper.2932x2932.jpg"
-    dest: "{{ lookup('env', 'HOME') }}/Pictures/wallpaper"
+    src: "{{ ROOTDIR }}/roles/configs/files/daft_punk.wallpaper.2932x2932.jpg"
+    dest: "{{ HOME }}/Pictures/wallpaper"
     state: link
     force: yes
 
@@ -100,8 +106,8 @@
   become_user: davideu
   become_method: sudo
   file:
-    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/redshift.conf.link"
-    dest: "{{ lookup('env', 'HOME') }}/.config/redshift/redshift.conf"
+    src: "{{ ROOTDIR }}/roles/configs/files/redshift.conf.link"
+    dest: "{{ HOME }}/.config/redshift/redshift.conf"
     state: link
     force: yes
 
@@ -110,8 +116,8 @@
   become_user: davideu
   become_method: sudo
   file:
-    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/rofi/config.rasi.link"
-    dest: "{{ lookup('env', 'HOME') }}/.config/rofi/config.rasi"
+    src: "{{ ROOTDIR }}/roles/configs/files/rofi/config.rasi.link"
+    dest: "{{ HOME }}/.config/rofi/config.rasi"
     state: link
     force: yes
 
@@ -120,7 +126,7 @@
   become_user: root
   become_method: sudo
   file:
-    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/rofi/rofr.sh.link"
+    src: "{{ ROOTDIR }}/roles/configs/files/rofi/rofr.sh.link"
     dest: "/usr/bin/rofr.sh"
     state: link
     force: yes
@@ -130,8 +136,8 @@
   become_user: davideu
   become_method: sudo
   file:
-    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/termite.config.link"
-    dest: "{{ lookup('env', 'HOME') }}/.config/termite/config"
+    src: "{{ ROOTDIR }}/roles/configs/files/termite.config.link"
+    dest: "{{ HOME }}/.config/termite/config"
     state: link
     force: yes
 
@@ -140,8 +146,8 @@
   become_user: davideu
   become_method: sudo
   file:
-    src: "{{ lookup('env', 'ROOTDIR') }}/roles/configs/files/xmodmap.link"
-    dest: "{{ lookup('env', 'HOME') }}/.xmodmap"
+    src: "{{ ROOTDIR }}/roles/configs/files/xmodmap.link"
+    dest: "{{ HOME }}/.xmodmap"
     state: link
     force: yes
 
@@ -150,4 +156,4 @@
   become_user: davideu
   become_method: sudo
   shell:
-    cmd: xmodmap {{ lookup('env', 'HOME') }}/.xmodmap
+    cmd: xmodmap {{ HOME }}/.xmodmap

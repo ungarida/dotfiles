@@ -3,35 +3,55 @@
 
 # This is meant to run on Manjaro Openbox https://manjaro-community.osdn.io/openbox/
 
-- name: Checks for curl installation | stat
+- name: Create directories if they don't exist
   become: yes
-  become_user: root
+  become_user: davideu
   become_method: sudo
-  stat:
-    path: "/usr/bin/curl"
-  register: curl_stat
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: davideu
+    group: davideu
+    mode: 0775
+  with_items:
+  - "{{ HOME }}/bin/"
 
 - name: Checks for zimfw installation | stat
   become: yes
   become_user: davideu
   become_method: sudo
   stat:
-    path: "{{ lookup('env', 'HOME') }}/.zim"
-  register: zimfw_stat
+    path: "{{ HOME }}/.zim"
+  register: zimfw
 
 - name: Installs zimfw | raw
   become: yes
   become_user: davideu
   become_method: sudo
   raw: 'curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh'
-  when: not zimfw_stat.stat.exists
+  when: not zimfw.stat.exists
 
 - name: Links .zshrc file | file
   become: yes
   become_user: davideu
   become_method: sudo
   file:
-    src: "{{ lookup('env', 'ROOTDIR') }}/roles/zsh/files/zshrc.link"
-    dest: "{{ lookup('env', 'HOME') }}/.zshrc"
+    src: "{{ ROOTDIR }}/roles/zsh/files/zshrc.link"
+    dest: "{{ HOME }}/.zshrc"
     state: link
     force: yes
+
+
+- name: Display paths of all .lnk files in dir bin
+  debug: msg={{ lookup('fileglob', '{{ ROOTDIR }}/roles/zsh/files/bin/*.lnk') }}
+
+- name: Links bin files | file
+  become: yes
+  become_user: davideu
+  become_method: sudo
+  file:
+    src: "{{ item }}"
+    dest: "{{ HOME }}/bin/{{ item | basename | regex_replace('^([^\\.]*).*', '\\1') }}"
+    state: link
+    force: yes
+  with_fileglob: "{{ ROOTDIR }}/roles/zsh/files/bin/*.lnk"
