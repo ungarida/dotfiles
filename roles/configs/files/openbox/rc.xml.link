@@ -437,7 +437,7 @@
         <command>xbacklight -10</command>
       </action>
     </keybind>
-    <keybind key="C-Space">
+    <keybind key="C-space">
       <action name="Execute">
         <command>sgtk-menu</command>
       </action>
