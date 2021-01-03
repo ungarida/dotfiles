@@ -1,0 +1,47 @@
+#!/bin/bash
+# ----------------------------------------------------------------------------
+# "THE BEER-WARE LICENSE" (Revision 42):
+# <k.bumsik@gmail.com> wrote this file. As long as you retain this notice you
+# can do whatever you want with this stuff. If we meet some day, and you think
+# this stuff is worth it, you can buy me a beer in return. - Bumsik Kim
+# ----------------------------------------------------------------------------
+
+# Configuration
+WIDTH=1024
+HEIGHT=768
+MODE_NAME="1024x768_ipad"
+DIS_NAME="VIRTUAL1"
+PRIMARY_DISPLAY="HDMI1"
+
+# # Add display mode
+RANDR_MODE=$(cvt "$WIDTH" "$HEIGHT" 60 | sed '2s/^.*Modeline\s*\".*\"//;2q;d')
+xrandr --addmode $DIS_NAME $MODE_NAME 2>/dev/null
+# If the mode doesn't exist then make mode and retry
+if ! [ $? -eq 0 ]; then
+  xrandr --newmode $MODE_NAME $RANDR_MODE
+  xrandr --addmode $DIS_NAME $MODE_NAME
+fi
+
+# Show display first
+xrandr --output $DIS_NAME --mode $MODE_NAME
+# Then move display
+sleep 5 # A short delay is needed. Otherwise sometimes the below command is ignored.
+# xrandr --output $DIS_NAME --left-of $PRIMARY_DISPLAY
+xrandr --output HDMI1 --primary --mode 1920x1080 --pos 1024x0 --rotate normal --output VIRTUAL1 --mode $MODE_NAME --pos 0x1080 --rotate normal
+
+# Cleanup before exit
+function finish {
+  xrandr --output $DIS_NAME --off 
+  xrandr --delmode $DIS_NAME $MODE_NAME
+  echo "Second monitor disabled."
+}
+trap finish EXIT
+
+# Get the display's position
+CLIP_POS=$(xrandr | perl -ne 'print "$1" if /'$DIS_NAME'\s*connected\s*(\d*x\d*\+\d*\+\d*)/')
+
+# Share screen
+x11vnc -ncache 10 -multiptr -repeat -clip $CLIP_POS
+if ! [ $? -eq 0 ]; then
+  echo x11vnc failed, did you \'apt-get install x11vnc\'?
+fi

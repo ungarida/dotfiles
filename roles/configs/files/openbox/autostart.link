@@ -10,30 +10,30 @@ elif which xsetroot >/dev/null 2>/dev/null; then
 fi
 test -z $BG || $BG -solid "#050526"
 
-### compositor
-sleep 1; manjaro-compositor --start &
+if [[ $(xrandr --listactivemonitors) = *VNC* ]]; then
+  echo "---VNC SESSION---"
+  sleep 1; nitrogen --restore &
+else
+  echo "---DESKTOP SESSION---"
+  #sleep 1; manjaro-compositor --start &
+  thunar --daemon &
+  sleep 1; xrandr --output HDMI1 --primary --mode 1920x1080 &
+  sleep 1; manjaro-tint2-session &
+  sleep 1; nitrogen --restore &
+  sleep 1; volumeicon &
 
-### launch thunar in daemon mode for faster startup
-### comment if you would rather use pcmanfm
-thunar --daemon &
+  ## skippy windowswitcher
+  skippy-xd --config ~/.config/skippy-xd/skippy-xd.rc --start-daemon &
 
-sleep 1; nitrogen --restore &
-sleep 1; manjaro-tint2-session &
+  ## super key for menu
+  # xcape -e 'Super_L=Alt_L|F1' &
 
-### volumeicon
-sleep 1; volumeicon &
+  ### PolicyKit authentication
+  /usr/bin/lxpolkit &
 
-## skippy windowswitcher
-skippy-xd --config ~/.config/skippy-xd/skippy-xd.rc --start-daemon &
+  ### Localize user system folders
+  xdg-user-dirs-gtk-update &
 
-## super key for menu
-xcape -e 'Super_L=Alt_L|F1' &
-
-### PolicyKit authentication
-/usr/bin/lxpolkit &
-
-### Localize user system folders
-xdg-user-dirs-gtk-update &
-
-### load custom xmodmap
-## sleep 1; /usr/bin/xmodmap ~/.xmodmap
+  ### load custom xmodmap
+  # sleep 1; /usr/bin/xmodmap ~/.xmodmap
+fi
