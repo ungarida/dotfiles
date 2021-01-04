@@ -472,11 +472,6 @@
         <command>xfce4-settings-manager</command>
       </action>
     </keybind>
-    <keybind key="W-m">
-      <action name="Execute">
-        <command>deadbeef</command>
-      </action>
-    </keybind>
     <keybind key="W-v">
       <action name="Execute">
         <command>pavucontrol</command>
@@ -485,16 +480,6 @@
     <keybind key="W-s">
       <action name="Execute">
         <command>skippy-xd</command>
-      </action>
-    </keybind>
-    <keybind key="W-Return">
-      <action name="Execute">
-        <command>termite -t "Termite"</command>
-      </action>
-    </keybind>
-    <keybind key="W-KP_Enter">
-      <action name="Execute">
-        <command>termite -t "Termite"</command>
       </action>
     </keybind>
     <keybind key="C-Escape"> 
