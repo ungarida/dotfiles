@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-# snatched from an archlabs iso long time ago
-# rewritten by root.nix.dk
-#
 
 Name=$(basename "$0")
 Version="0.1"
@@ -13,16 +10,22 @@ Usage:   $Name [options]
 Options:
      -h      Show this message
      -v      Show version
+     -f      Show file browser
      -w      Show window switcher
      -m      Show root menu
-     -r      Launcher dialog
-     -l      Session choices
+     -r      Show launcher dialog
+     -R      Show launcher dialog combined with window switcher
+     -s      Show SSH launcher
+     -l      Show session choices
 
 EOF
 }
 
 #  Handle command line arguments
-while getopts ":hvwmrl" opt; do
+#  This script assumes that rofi as been configured as follow:
+#  rofi -modi "combi,drun,file-browser,run,ssh,window"
+
+while getopts ":hvflwmrRsl" opt; do
     case $opt in
         h)
             _usage
@@ -32,18 +35,31 @@ while getopts ":hvwmrl" opt; do
             echo -e "$Name -- Version $Version"
             exit 0
             ;;
+        f)
+            rofi -show file-browser -show-icons -eh 1\
+                -line-padding 50 -padding 50 -hide-scrollbar
+            ;;
         w)
-            rofi -modi window -show window -hide-scrollbar \
-                -eh 1 -padding 50 -line-padding 4
+            rofi -show window -show-icons -eh 1\
+                -line-padding 50 -padding 50 -hide-scrollbar
             ;;
         m)
             rofi -location 1 -yoffset 40 -xoffset 10 \
-                -modi run,drun -show drun -line-padding 50 \
+                -show drun -line-padding 50 \
                 -columns 2 -padding 50 -hide-scrollbar
             ;;
         r)
-            rofi -modi run,drun -show drun -line-padding 50 \
-                -columns 2 -padding 50 -hide-scrollbar
+            rofi -show drun -show-icons \
+                -line-padding 50 -columns 2 -padding 50 \
+                -hide-scrollbar
+            ;;
+        R)
+            rofi -combi-modi window,drun -show combi -show-icons \
+                -line-padding 50 -columns 2 -padding 50 \
+                -hide-scrollbar
+            ;;
+        s)  
+            rofi -show ssh -padding 50 -line-padding 50 -hide-scrollbar
             ;;
         l)
             ANS=$(echo " Lock| Logout| Reboot| Shutdown" | \

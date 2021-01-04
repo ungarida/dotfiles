@@ -1,6 +1,12 @@
 /**
  * ROFI Color theme
  */
+ 
+ configuration {
+    modi: "combi,drun,file-browser,run,ssh,window";
+    font: "Hermit Regular 10";
+    combi-modi: "window,drun,ssh";
+ }
 
 * {
     selected-normal-foreground:  #050526;

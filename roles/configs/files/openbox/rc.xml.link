@@ -387,11 +387,6 @@
     <keybind key="S-W-Down">
       <action name="SendToDesktopDown"/>
     </keybind>
-    <keybind key="A-Escape">
-      <action name="Lower"/>
-      <action name="FocusToBottom"/>
-      <action name="Unfocus"/>
-    </keybind>
     <keybind key="XF86AudioRaiseVolume">
       <action name="Execute">
         <command>pamixer -i 2</command>
@@ -512,19 +507,24 @@
         <command>xkill</command>
       </action>
     </keybind>
-    <!-- <keybind key="A-F1">
+    <keybind key="A-Escape">
       <action name="Execute">
-        <command>jgmenu_run</command>
+        <command>rofr.sh -l</command>
       </action>
-    </keybind> -->
+    </keybind>
     <keybind key="A-F1">
-      <action name="ShowMenu">
-        <menu>client-menu</menu>
+      <action name="Execute">
+        <command>rofr.sh -f</command>
       </action>
     </keybind>
     <keybind key="A-F2">
       <action name="Execute">
-        <command>rofr.sh -r</command>
+        <command>rofr.sh -R</command>
+      </action>
+    </keybind>
+    <keybind key="A-F3">
+      <action name="Execute">
+        <command>rofr.sh -s</command>
       </action>
     </keybind>
     <keybind key="A-F4">
