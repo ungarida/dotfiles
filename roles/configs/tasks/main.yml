@@ -141,6 +141,16 @@
     state: link
     force: yes
 
+- name: Links Dracula openbox theme | file
+  become: yes
+  become_user: davideu
+  become_method: sudo
+  file:
+    src: "{{ ROOTDIR }}/roles/configs/files/openbox/themes/Dracula.link"
+    dest: "{{ HOME }}/.themes/Dracula"
+    state: link
+    force: yes
+
 - name: Links .xmodmap file | file
   become: yes
   become_user: davideu

@@ -41,9 +41,23 @@
     state: link
     force: yes
 
+- name: Checks for pyenv installation | stat
+  become: yes
+  become_user: davideu
+  become_method: sudo
+  stat:
+    path: "{{ HOME }}/.pyenv"
+  register: pyenv
 
-- name: Display paths of all .lnk files in dir bin
-  debug: msg={{ lookup('fileglob', '{{ ROOTDIR }}/roles/zsh/files/bin/*.lnk') }}
+- name: Installs pyenv | raw
+  become: yes
+  become_user: davideu
+  become_method: sudo
+  raw: 'url https://pyenv.run | bash'
+  when: not pyenv.stat.exists
+
+- name: Display paths of all .link files in dir bin
+  debug: msg={{ lookup('fileglob', '{{ ROOTDIR }}/roles/zsh/files/bin/*.link') }}
 
 - name: Links bin files | file
   become: yes
@@ -54,4 +68,4 @@
     dest: "{{ HOME }}/bin/{{ item | basename | regex_replace('^([^\\.]*).*', '\\1') }}"
     state: link
     force: yes
-  with_fileglob: "{{ ROOTDIR }}/roles/zsh/files/bin/*.lnk"
+  with_fileglob: "{{ ROOTDIR }}/roles/zsh/files/bin/*.link"

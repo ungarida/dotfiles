@@ -19,42 +19,42 @@
     <primaryMonitor>Mouse</primaryMonitor>
   </placement>
   <theme>
-    <name>Dracula-withoutBorder</name>
+    <name>Dracula</name>
     <titleLayout>NLIMC</titleLayout>
     <keepBorder>no</keepBorder>
     <animateIconify>yes</animateIconify>
     <font place="ActiveWindow">
-      <name>Cantarell</name>
+      <name>Hermit</name>
       <size>10</size>
       <weight>Bold</weight>
       <slant>Normal</slant>
     </font>
     <font place="InactiveWindow">
-      <name>Cantarell</name>
+      <name>Hermit Light</name>
       <size>10</size>
       <weight>Normal</weight>
       <slant>Italic</slant>
     </font>
     <font place="MenuHeader">
-      <name>Cantarell</name>
+      <name>Hermit</name>
       <size>10</size>
       <weight>Normal</weight>
       <slant>Normal</slant>
     </font>
     <font place="MenuItem">
-      <name>Cantarell</name>
+      <name>Hermit</name>
       <size>10</size>
-      <weight>Normal</weight>
-      <slant>Normal</slant>
+      <weight>Light</weight>
+      <slant>Light</slant>
     </font>
     <font place="ActiveOnScreenDisplay">
-      <name>Cantarell</name>
+      <name>Hermit</name>
       <size>10</size>
       <weight>Normal</weight>
       <slant>Normal</slant>
     </font>
     <font place="InactiveOnScreenDisplay">
-      <name>Cantarell</name>
+      <name>Hermit</name>
       <size>10</size>
       <weight>Normal</weight>
       <slant>Normal</slant>
@@ -65,14 +65,14 @@
     <firstdesk>1</firstdesk>
     <names>
       <name>Home</name>
+      <name>Music</name>
       <name>Web</name>
-      <name>Files</name>
-      <name>Pictures</name>
-      <name>Documents</name>
-      <name>Develop</name>
       <name>Terminal</name>
+      <name>Design</name>
+      <name>Develop</name>
+      <name>Document</name>
     </names>
-    <popupTime>800</popupTime>
+    <popupTime>750</popupTime>
   </desktops>
   <resize>
     <drawContents>yes</drawContents>
@@ -432,11 +432,6 @@
         <command>xbacklight -10</command>
       </action>
     </keybind>
-    <keybind key="C-space">
-      <action name="Execute">
-        <command>sgtk-menu</command>
-      </action>
-    </keybind>
     <keybind key="Print">
       <action name="Execute">
         <command>scrot 'screenshot_%Y%m%d-%H%M%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; xviewer $$(xdg-user-dir PICTURES)/$f'</command>
@@ -482,7 +477,7 @@
         <command>skippy-xd</command>
       </action>
     </keybind>
-    <keybind key="C-Escape"> 
+    <keybind key="C-Escape">
       <action name="Execute">
         <command>lockscreen -d -f "Hermit-Light" -p -t "Mallard is locked!" -- scrot</command>
       </action>
@@ -521,12 +516,6 @@
     <keybind key="A-F6">
       <action name="ToggleMaximize"/>
     </keybind>
-    <keybind key="A-F8">
-      <action name="ToggleDecorations"/>
-    </keybind>
-    <keybind key="W-d">
-      <action name="ToggleShowDesktop"/>
-    </keybind>
     <keybind key="W-b">
       <action name="ToggleDecorations"/>
     </keybind>
@@ -539,14 +528,14 @@
     <keybind key="S-W-q">
       <action name="Close"/>
     </keybind>
-    <keybind key="W-space">
-      <action name="ShowMenu">
-        <menu>root-menu</menu>
-      </action>
-    </keybind>
     <keybind key="A-space">
       <action name="ShowMenu">
         <menu>client-menu</menu>
+      </action>
+    </keybind>
+    <keybind key="W-space">
+      <action name="ShowMenu">
+        <menu>root-menu</menu>
       </action>
     </keybind>
     <keybind key="W-KP_1">

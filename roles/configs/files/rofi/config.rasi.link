@@ -1,146 +1,125 @@
-/**
- * ROFI Color theme
- */
- 
- configuration {
-    modi: "combi,drun,file-browser,run,ssh,window";
-    font: "Hermit Regular 10";
+configuration {
     combi-modi: "window,drun,ssh";
- }
+    font: "Hermit Regular 10";
+    modi: "combi,drun,file-browser,run,ssh,window";
+    show-icons: true;
+}
 
 * {
-    selected-normal-foreground:  #050526;
-    foreground:                  #FFF7D6;
-    normal-foreground:           @foreground;
-    alternate-normal-background: rgba ( 0, 0, 0, 0 % );
-    red:                         rgba ( 220, 50, 47, 100 % );
-    selected-urgent-foreground:  #00C6C3;
-    blue:                        rgba ( 38, 139, 210, 100 % );
-    urgent-foreground:           rgba ( 255, 129, 255, 100 % );
-    alternate-urgent-background: rgba ( 0, 0, 0, 0 % );
-    active-foreground:           rgba ( 138, 196, 255, 100 % );
-    lightbg:                     rgba ( 238, 232, 213, 100 % );
-    selected-active-foreground:  #00C6C3;
-    alternate-active-background: rgba ( 0, 0, 0, 0 % );
-    background:                  rgba ( 0, 0, 33, 87 % );
-    bordercolor:                 rgba ( 219, 223, 188, 100 % );
-    alternate-normal-foreground: @foreground;
-    normal-background:           rgba ( 0, 0, 208, 0 % );
-    lightfg:                     rgba ( 88, 104, 117, 100 % );
-    selected-normal-background:  #00C6C3;
-    border-color:                @foreground;
-    spacing:                     2;
-    separatorcolor:              rgba ( 219, 223, 188, 100 % );
-    urgent-background:           rgba ( 0, 0, 208, 0 % );
-    selected-urgent-background:  rgba ( 255, 129, 127, 100 % );
-    alternate-urgent-foreground: @urgent-foreground;
-    background-color:            rgba ( 0, 0, 0, 0 % );
-    alternate-active-foreground: @active-foreground;
-    active-background:           rgba ( 0, 0, 208, 0 % );
-    selected-active-background:  rgba ( 138, 196, 255, 100 % );
+	base00: #282A36;
+	base01: #2E3C43;
+	base02: #314549;
+	base03: #546E7A;
+	base04: #B2CCD6;
+	base05: #EEFFFF;
+	base06: #EEFFFF;
+	base07: #FFFFFF;
+	base08: #F07178;
+	base09: #F78C6C;
+	base0A: #FFCB6B;
+	base0B: #C3E88D;
+	base0C: #89DDFF;
+	base0D: #FF79C6;
+	base0E: #BD93F9;
+	base0F: #FF5370;
+	spacing: 0;
+	background-color: #050526;
+	font: "Hermit Light 12";
 }
-#window {
-    background-color: @background;
-    border:           1;
-    padding:          5;
+
+window {
+	transparency: "real";
+	/*fullscreen: true;*/
+	background-color: #263238CC; /*base00 + CC (80% opacity)*/
 }
-#mainbox {
-    border:  0;
-    padding: 0;
+
+mainbox {
+	children: [inputbar, message, sidebar, listview];
+	spacing: 16px;
+	padding: 16px 0;
+	border: 1px;
+	border-color: @base0E;
 }
-#message {
-    border:       2px 0px 0px ;
-    border-color: @separatorcolor;
-    padding:      1px ;
+
+inputbar {
+	padding: 0 30px;
+	children: [prompt, textbox-prompt-colon, entry, case-indicator];
 }
-#textbox {
-    text-color: @foreground;
+
+prompt {
+	text-color: @base0E;
 }
-#listview {
-    fixed-height: 0;
-    border:       2px 0px 0px ;
-    border-color: @separatorcolor;
-    spacing:      2px ;
-    scrollbar:    true;
-    padding:      2px 0px 0px ;
+
+textbox-prompt-colon {
+	expand: false;
+	str: " :";
+	margin: 0 1ch 0 0;
+	text-color: @base0E;
 }
-#element {
-    border:  0;
-    padding: 1px ;
+
+entry {
+	text-color: @base07;
 }
-#element.normal.normal {
-    background-color: @normal-background;
-    text-color:       @normal-foreground;
+
+case-indicator {
+	text-color: @base0F;
 }
-#element.normal.urgent {
-    background-color: @urgent-background;
-    text-color:       @urgent-foreground;
+
+sidebar, message {
+	border: 1px 0;
+	border-color: @base0D;
 }
-#element.normal.active {
-    background-color: @active-background;
-    text-color:       @active-foreground;
+
+button, textbox {
+	background-color: @base00;
+	text-color: @base0E;
+	padding: 5px;
 }
-#element.selected.normal {
-    background-color: @selected-normal-background;
-    text-color:       @selected-normal-foreground;
+
+button selected {
+	background-color: @base00;
 }
-#element.selected.urgent {
-    background-color: @selected-urgent-background;
-    text-color:       @selected-urgent-foreground;
+
+listview {
+	scrollbar: true;
+	margin: 0 10px 0 30px;
 }
-#element.selected.active {
-    background-color: @selected-active-background;
-    text-color:       @selected-active-foreground;
+
+scrollbar {
+	background-color: @base00;
+	handle-color: @base0E;
+	handle-width: 4px;
+	border: 0 0px;
+	border-color: @base0E;
+	margin: 0 0 0 20px;
 }
-#element.alternate.normal {
-    background-color: @alternate-normal-background;
-    text-color:       @alternate-normal-foreground;
+
+element {
+	padding: 5px;
+	highlight: bold underline;
 }
-#element.alternate.urgent {
-    background-color: @alternate-urgent-background;
-    text-color:       @alternate-urgent-foreground;
+
+element normal {
+	background-color: transparent;
 }
-#element.alternate.active {
-    background-color: @alternate-active-background;
-    text-color:       @alternate-active-foreground;
+
+element selected {
+	background-color: @base0E;
+	text-color: @base07;
 }
-#scrollbar {
-    width:        4px ;
-    border:       0;
-    handle-width: 8px ;
-    padding:      0;
+
+element alternate {
+	/*background-color: @base03;*/
 }
-#mode-switcher {
-    border:       2px 0px 0px ;
-    border-color: @separatorcolor;
+
+element normal normal, element selected normal, element alternate normal {
+	text-color: @base07;
 }
-#button.selected {
-    background-color: @selected-normal-background;
-    text-color:       @selected-normal-foreground;
+
+element normal urgent, element selected urgent, element alternate urgent {
+	text-color: @base07;
 }
-#inputbar {
-    spacing:    0;
-    text-color: @normal-foreground;
-    padding:    1px ;
-}
-#case-indicator {
-    spacing:    0;
-    text-color: @normal-foreground;
-}
-#entry {
-    spacing:    0;
-    text-color: @normal-foreground;
-}
-#prompt, button{
-    spacing:    0;
-    text-color: @normal-foreground;
-}
-#inputbar {
-    children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
-}
-#textbox-prompt-colon {
-    expand:     false;
-    str:        ":";
-    margin:     0px 0.3em 0em 0em ;
-    text-color: @normal-foreground;
+
+element normal active, element selected active, element alternate active {
+	text-color: @base07;
 }
