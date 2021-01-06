@@ -62,12 +62,13 @@ while getopts ":hvflwmrRsl" opt; do
             rofi -show ssh -padding 50 -line-padding 50 -hide-scrollbar
             ;;
         l)
-            ANS=$(echo " Lock| Logout| Reboot| Shutdown" | \
+            ANS=$(echo " Lock| Logout| Hibernate| Reboot| Shutdown" | \
                 rofi -sep "|" -dmenu -i -p 'System ' "" -width 20 \
-                -hide-scrollbar -eh 1 -line-padding 4 -padding 50 -lines 4)
+                -hide-scrollbar -eh 1 -line-padding 4 -padding 50 -lines 5)
             case "$ANS" in
                 *Lock) lockscreen -f "Hermit-Light" -d -p -t "Mallard is locked!" -- scrot ;;
                 *Logout) loginctl terminate-session $(loginctl session-status | head -n 1 | awk '{print $1}') ;;
+                *Hibernate) lockscreen -f "Hermit-Light" -d -p -t "Mallard is locked!" -- scrot; systemctl suspend-then-hibernate ;;
                 *Reboot) systemctl reboot ;;
                 *Shutdown) systemctl poweroff
             esac
