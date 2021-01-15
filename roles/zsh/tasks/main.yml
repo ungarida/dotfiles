@@ -14,7 +14,7 @@
     group: davideu
     mode: 0775
   with_items:
-  - "{{ HOME }}/bin/"
+  - "{{ HOME }}/.local/bin/"
 
 - name: Checks for zimfw installation | stat
   become: yes
