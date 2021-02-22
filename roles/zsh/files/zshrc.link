@@ -131,5 +131,24 @@ export PATH="$PATH:$HOME/.yarn/bin"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-# aws completion
+# AWS completion
 source  $HOME/.local/bin/aws_zsh_completer.sh
+
+# NPM packages in homedir
+NPM_PACKAGES="$HOME/.npm-packages"
+
+# Tell our environment about user-installed node tools
+PATH="$NPM_PACKAGES/bin:$PATH"
+# Unset manpath so we can inherit from /etc/manpath via the `manpath` command
+unset MANPATH  # delete if you already modified MANPATH elsewhere in your configuration
+MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+
+# Tell Node about these packages
+NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+
+export N_PREFIX="$HOME/.local/"
+
+# Add Clayton bash aliases.
+if [ -f ~/.clayton_bash_aliases ]; then
+source ~/.clayton_bash_aliases
+fi

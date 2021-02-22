@@ -13,8 +13,8 @@
       - otf-fira-mono
       - otf-fira-sans
       - otf-hermit
+      - realvnc-vnc-server
       - redshift
-      - tigervnc
       - yarn
     state: present
     update_cache: yes
