@@ -39,3 +39,8 @@ x11vnc -ncache 10 -multiptr -repeat -clip $CLIP_POS
 if ! [ $? -eq 0 ]; then
   echo x11vnc failed, did you \'apt-get install x11vnc\'?
 fi
+
+sleep 5
+
+nitrogen --set-color="#050424" --set-zoom ~/Pictures/daft_punk.wallpaper.2932x2932.png --head 0
+nitrogen --set-color="#050424" --set-zoom ~/Pictures/daft_punk.wallpaper.2932x2932.png --head 1

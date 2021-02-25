@@ -89,17 +89,18 @@
   become_user: davideu
   become_method: sudo
   file:
-    src: "{{ ROOTDIR }}/roles/configs/files/daft_punk.wallpaper.2932x2932.jpg"
-    dest: "{{ HOME }}/Pictures/wallpaper"
+    src: "{{item}}"
+    dest: "{{ HOME }}/Pictures/{{ item | basename | regex_replace('^(.*)\\.link$', '\\1') }}"
     state: link
     force: yes
+  with_fileglob: "{{ ROOTDIR }}/roles/configs/files/Pictures/*"
 
 - name: Set nitrogen wallpaper | shell
   become: yes
   become_user: davideu
   become_method: sudo
   shell:
-    cmd: nitrogen --set-color="#050424" --set-zoom ~/Pictures/wallpaper --save
+    cmd: nitrogen --set-color="#050424" --set-zoom ~/Pictures/daft_punk.wallpaper.2932x2932.jpg --save
 
 - name: Links Redshift redshift.conf | file
   become: yes
